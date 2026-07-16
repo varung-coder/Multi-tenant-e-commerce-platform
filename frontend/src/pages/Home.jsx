@@ -2,15 +2,34 @@ import Navbar from "../components/Navbar";
 
 function Home() {
   return (
-    <div>
+    <>
       <Navbar />
 
-      <h1>Welcome to Multi-Tenant E-Commerce</h1>
+      <section className="hero">
+        <div className="hero-content">
+          <h1>Welcome to ShopEase</h1>
 
-      <p>Shop from multiple stores on one platform.</p>
+          <h2>
+            Buy From Multiple Stores
+            <br />
+            In One Platform
+          </h2>
 
-      <button>Explore Stores</button>
-    </div>
+          <p>
+            Discover thousands of products from trusted sellers
+            with fast delivery and secure payments.
+          </p>
+
+          <button className="hero-btn">
+            Shop Now
+          </button>
+        </div>
+      </section>
+      
+      <footer className="footer">
+       <p>© 2026 ShopEase. All Rights Reserved.</p>
+      </footer>
+    </>
   );
 }
 

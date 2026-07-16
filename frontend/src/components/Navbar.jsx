@@ -1,14 +1,23 @@
 function Navbar() {
   return (
-    <nav>
-      <h2>ShopEase</h2>
+    <nav className="navbar">
 
-      <div>
-        <a href="#">Home</a>{" | "}
-        <a href="#">Products</a>{" | "}
-        <a href="#">Login</a>{" | "}
-        <a href="#">Register</a>
+      <div className="logo">
+        <h2>ShopEase</h2>
       </div>
+
+      <ul className="nav-links">
+        <li>Home</li>
+        <li>Products</li>
+        <li>Categories</li>
+        <li>About</li>
+        <li>Contact</li>
+      </ul>
+
+      <button className="login-btn">
+        Login
+      </button>
+
     </nav>
   );
 }
