@@ -1,5 +1,11 @@
+import { FaHeart } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import hero from "../assets/hero.png";
+
+import headphones from "../assets/headphones.jpg";
+import smartwatch from "../assets/smartwatch.jpg";
+import shoes from "../assets/shoes.jpg";
+import chair from "../assets/chair.jpg";
 
 function Home() {
   return (
@@ -66,25 +72,41 @@ function Home() {
   <div className="product-container">
 
     <div className="product-card">
+      <span className="badge">Best Seller</span>
+      <FaHeart className="wishlist-icon" />
+      <img src={headphones} alt="Headphones" className="product-image" />
       <h3>Wireless Headphones</h3>
+      <div className="rating">⭐⭐⭐⭐⭐</div>
       <p>₹2,499</p>
       <button>Add to Cart</button>
     </div>
 
     <div className="product-card">
+      <span className="badge">Best Seller</span>
+      <FaHeart className="wishlist-icon" />
+      <img src={smartwatch} alt="Smart Watch" className="product-image" />
       <h3>Smart Watch</h3>
+      <div className="rating">⭐⭐⭐⭐⭐</div>
       <p>₹3,999</p>
       <button>Add to Cart</button>
     </div>
 
     <div className="product-card">
+      <span className="badge">Best Seller</span>
+      <FaHeart className="wishlist-icon" />
+      <img src={shoes} alt="Running Shoes" className="product-image" />
       <h3>Running Shoes</h3>
+      <div className="rating">⭐⭐⭐⭐⭐</div>
       <p>₹2,199</p>
       <button>Add to Cart</button>
     </div>
 
     <div className="product-card">
+      <span className="badge">Best Seller</span>
+      <FaHeart className="wishlist-icon" />
+      <img src={chair} alt="Office Chair" className="product-image" />
       <h3>Office Chair</h3>
+      <div className="rating">⭐⭐⭐⭐⭐</div>
       <p>₹5,499</p>
       <button>Add to Cart</button>
     </div>
@@ -92,31 +114,137 @@ function Home() {
   </div>
 
  </section>
-<section className="features">
+
+  <section className="why-us">
 
   <h2>Why Choose ShopEase?</h2>
 
-  <div className="feature-container">
+  <div className="why-container">
 
-    <div className="feature-card">
+    <div className="why-card">
       <h3>🚚 Fast Delivery</h3>
       <p>Get your orders delivered quickly across India.</p>
     </div>
 
-    <div className="feature-card">
+    <div className="why-card">
       <h3>🔒 Secure Payments</h3>
-      <p>100% safe and secure online payment methods.</p>
+      <p>100% safe and trusted payment methods.</p>
     </div>
 
-    <div className="feature-card">
-      <h3>🎧 24/7 Support</h3>
-      <p>Our support team is available anytime to help you.</p>
+    <div className="why-card">
+      <h3>⭐ Trusted Sellers</h3>
+      <p>Shop from verified sellers with great ratings.</p>
+    </div>
+
+    <div className="why-card">
+      <h3>💬 24/7 Support</h3>
+      <p>Our team is always ready to help you.</p>
     </div>
 
   </div>
 
-  </section>
-      
+ </section> 
+ <section className="testimonials">
+
+  <h2>What Our Customers Say</h2>
+
+  <div className="testimonial-container">
+
+    <div className="testimonial-card">
+      <p>
+        ⭐⭐⭐⭐⭐
+        <br />
+        Amazing shopping experience! Fast delivery and genuine products.
+      </p>
+      <h4>- Rahul Sharma</h4>
+    </div>
+
+    <div className="testimonial-card">
+      <p>
+        ⭐⭐⭐⭐⭐
+        <br />
+        Best multi-vendor platform. Easy ordering and secure payment.
+      </p>
+      <h4>- Priya Verma</h4>
+    </div>
+
+    <div className="testimonial-card">
+      <p>
+        ⭐⭐⭐⭐⭐
+        <br />
+        Excellent customer support. Highly recommended!
+      </p>
+      <h4>- Aman Gupta</h4>
+    </div>
+
+  </div>
+
+</section>
+
+<section className="newsletter">
+
+  <h2>Subscribe to Our Newsletter</h2>
+
+  <p>
+    Get the latest offers, discounts and new arrivals directly in your inbox.
+  </p>
+
+  <div className="newsletter-box">
+    <input
+      type="email"
+      placeholder="Enter your email"
+    />
+
+    <button>
+      Subscribe
+    </button>
+  </div>
+
+ </section>
+
+ <section className="stats">
+
+  <div className="stat-box">
+    <h2>10K+</h2>
+    <p>Happy Customers</p>
+  </div>
+
+  <div className="stat-box">
+    <h2>500+</h2>
+    <p>Trusted Sellers</p>
+  </div>
+
+  <div className="stat-box">
+    <h2>50K+</h2>
+    <p>Products</p>
+  </div>
+
+  <div className="stat-box">
+    <h2>99%</h2>
+    <p>Customer Satisfaction</p>
+  </div>
+
+ </section>
+ <section className="brands">
+
+  <h2>Our Trusted Brands</h2>
+
+  <div className="brand-container">
+
+    <div className="brand-card">Apple</div>
+
+    <div className="brand-card">Samsung</div>
+
+    <div className="brand-card">Nike</div>
+
+    <div className="brand-card">Adidas</div>
+
+    <div className="brand-card">Sony</div>
+
+  </div>
+
+ </section>
+
       <footer className="footer">
        <p>© 2026 ShopEase. All Rights Reserved.</p>
       </footer>

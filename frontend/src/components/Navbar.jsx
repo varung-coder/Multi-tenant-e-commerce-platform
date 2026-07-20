@@ -6,6 +6,13 @@ function Navbar() {
         <h2>ShopEase</h2>
       </div>
 
+      <div className="search-box">
+        <input
+           type="text"
+           placeholder="🔍 Search products..."
+        />
+      </div>
+
       <ul className="nav-links">
         <li>Home</li>
         <li>Products</li>
@@ -14,9 +21,10 @@ function Navbar() {
         <li>Contact</li>
       </ul>
 
-      <button className="login-btn">
-        Login
-      </button>
+      <div className="nav-icons">
+        <span>🛒</span>
+        <span>👤</span>
+      </div>
 
     </nav>
   );
