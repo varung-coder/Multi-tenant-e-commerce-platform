@@ -1,11 +1,35 @@
 import { FaHeart } from "react-icons/fa";
 import Navbar from "../components/Navbar";
-import hero from "../assets/hero.png";
+import ProductCard from "../components/ProductCard";
 
+import hero from "../assets/hero.png";
 import headphones from "../assets/headphones.jpg";
 import smartwatch from "../assets/smartwatch.jpg";
 import shoes from "../assets/shoes.jpg";
 import chair from "../assets/chair.jpg";
+
+const products = [
+  {
+    image: headphones,
+    title: "Wireless Headphones",
+    price: "₹2,499",
+  },
+  {
+    image: smartwatch,
+    title: "Smart Watch",
+    price: "₹3,999",
+  },
+  {
+    image: shoes,
+    title: "Running Shoes",
+    price: "₹2,199",
+  },
+  {
+    image: chair,
+    title: "Office Chair",
+    price: "₹5,499",
+  },
+];
 
 function Home() {
   return (
@@ -36,6 +60,7 @@ function Home() {
     <img src={hero} alt="Shopping" />
   </div>
 </section>
+
 <section className="categories">
 
   <h2>Shop by Category</h2>
@@ -65,51 +90,21 @@ function Home() {
    </div>
 
 </section>
+
 <section className="products">
 
   <h2>Featured Products</h2>
 
   <div className="product-container">
 
-    <div className="product-card">
-      <span className="badge">Best Seller</span>
-      <FaHeart className="wishlist-icon" />
-      <img src={headphones} alt="Headphones" className="product-image" />
-      <h3>Wireless Headphones</h3>
-      <div className="rating">⭐⭐⭐⭐⭐</div>
-      <p>₹2,499</p>
-      <button>Add to Cart</button>
-    </div>
-
-    <div className="product-card">
-      <span className="badge">Best Seller</span>
-      <FaHeart className="wishlist-icon" />
-      <img src={smartwatch} alt="Smart Watch" className="product-image" />
-      <h3>Smart Watch</h3>
-      <div className="rating">⭐⭐⭐⭐⭐</div>
-      <p>₹3,999</p>
-      <button>Add to Cart</button>
-    </div>
-
-    <div className="product-card">
-      <span className="badge">Best Seller</span>
-      <FaHeart className="wishlist-icon" />
-      <img src={shoes} alt="Running Shoes" className="product-image" />
-      <h3>Running Shoes</h3>
-      <div className="rating">⭐⭐⭐⭐⭐</div>
-      <p>₹2,199</p>
-      <button>Add to Cart</button>
-    </div>
-
-    <div className="product-card">
-      <span className="badge">Best Seller</span>
-      <FaHeart className="wishlist-icon" />
-      <img src={chair} alt="Office Chair" className="product-image" />
-      <h3>Office Chair</h3>
-      <div className="rating">⭐⭐⭐⭐⭐</div>
-      <p>₹5,499</p>
-      <button>Add to Cart</button>
-    </div>
+   {products.map((product, index) => (
+  <ProductCard
+    key={index}
+    image={product.image}
+    title={product.title}
+    price={product.price}
+  />
+  ))}
 
   </div>
 
