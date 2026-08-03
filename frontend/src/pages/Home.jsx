@@ -2,36 +2,34 @@ import { FaHeart } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 
+import { useEffect, useState } from "react";
+import API from "../api/api";
+
 import hero from "../assets/hero.png";
 import headphones from "../assets/headphones.jpg";
 import smartwatch from "../assets/smartwatch.jpg";
 import shoes from "../assets/shoes.jpg";
 import chair from "../assets/chair.jpg";
 
-const products = [
-  {
-    image: headphones,
-    title: "Wireless Headphones",
-    price: "₹2,499",
-  },
-  {
-    image: smartwatch,
-    title: "Smart Watch",
-    price: "₹3,999",
-  },
-  {
-    image: shoes,
-    title: "Running Shoes",
-    price: "₹2,199",
-  },
-  {
-    image: chair,
-    title: "Office Chair",
-    price: "₹5,499",
-  },
-];
 
 function Home() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const res = await API.get("/products");
+
+      console.log(res.data);
+      setProducts(res.data.products);
+
+     } catch (error) {
+        console.log(error);
+    }
+  };
   return (
     <>
       <Navbar />
@@ -97,13 +95,13 @@ function Home() {
 
   <div className="product-container">
 
-   {products.map((product, index) => (
-  <ProductCard
-    key={index}
-    image={product.image}
-    title={product.title}
-    price={product.price}
-  />
+   {products.map((product) => (
+    <ProductCard
+     key={product._id}
+     image={hero}
+     title={product.name}
+     price={`₹${product.price}`}
+    />
   ))}
 
   </div>
