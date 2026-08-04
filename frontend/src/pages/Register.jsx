@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import API from "../api/api";
 
 function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleRegister = () => {
+ const handleRegister = async () => {
 
   if (name.trim() === "") {
     setError("Please enter your name.");
@@ -35,8 +37,25 @@ function Register() {
     return;
   }
 
-  setError("");
-  alert("Registration Successful!");
+  try {
+
+  const res = await API.post("/users/register", {
+    name,
+    email,
+    password,
+  });
+
+  alert(res.data.message);
+
+  navigate("/login");
+
+} catch (error) {
+
+  setError(
+    error.response?.data?.message || "Registration Failed"
+  );
+
+}
 
  };
   return (
