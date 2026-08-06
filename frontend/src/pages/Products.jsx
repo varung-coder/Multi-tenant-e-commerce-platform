@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import API from "../api/api";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 
@@ -7,31 +8,25 @@ import smartwatch from "../assets/smartwatch.jpg";
 import shoes from "../assets/shoes.jpg";
 import chair from "../assets/chair.jpg";
 
-const products = [
-  {
-    image: headphones,
-    title: "Wireless Headphones",
-    price: "₹2,499",
-  },
-  {
-    image: smartwatch,
-    title: "Smart Watch",
-    price: "₹3,999",
-  },
-  {
-    image: shoes,
-    title: "Running Shoes",
-    price: "₹2,199",
-  },
-  {
-    image: chair,
-    title: "Office Chair",
-    price: "₹5,499",
-  },
-];
 
 function Products() {
   const [search, setSearch] = useState("");
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+  fetchProducts();
+}, []);
+
+const fetchProducts = async () => {
+  try {
+    const res = await API.get("/products");
+    console.log(res.data);
+    setProducts(res.data.products);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
   return (
     <>
       <Navbar />
@@ -64,19 +59,19 @@ function Products() {
       <div className="product-container">
 
       {products.filter((product) =>
-        product.title.toLowerCase().includes(search.toLowerCase())
+        product.name.toLowerCase().includes(search.toLowerCase())
       ).length > 0 ? (
 
        products
         .filter((product) =>
-          product.title.toLowerCase().includes(search.toLowerCase())
+          product.name.toLowerCase().includes(search.toLowerCase())
         )
        .map((product, index) => (
        <ProductCard
-         key={index}
+         key={product._id}
          image={product.image}
-         title={product.title}
-         price={product.price}
+         title={product.name}
+         price={`₹${product.price}`}
        />
      ))
 

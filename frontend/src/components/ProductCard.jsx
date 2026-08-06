@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 function ProductCard({ image, title, price }) {
   return (
     <div className="product-card">
@@ -19,7 +20,9 @@ function ProductCard({ image, title, price }) {
       <p>{price}</p>
 
       <div className="product-actions">
-        <button className="buy-btn">Buy Now</button>
+        <Link to="/product">
+           <button className="buy-btn">View Details</button>
+        </Link>
         <button className="cart-btn">Add to Cart</button>
       </div>
 
