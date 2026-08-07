@@ -21,6 +21,7 @@ const fetchProducts = async () => {
   try {
     const res = await API.get("/products");
     console.log(res.data);
+    console.log("First Product:", res.data.products[0]);
     setProducts(res.data.products);
   } catch (error) {
     console.log(error);
@@ -40,6 +41,7 @@ const fetchProducts = async () => {
        </p>
        <div className="search-container">
        <input
+
          type="text"
          placeholder="🔍 Search products..."
          value={search}
@@ -69,6 +71,7 @@ const fetchProducts = async () => {
        .map((product, index) => (
        <ProductCard
          key={product._id}
+         id={product._id}
          image={product.image}
          title={product.name}
          price={`₹${product.price}`}

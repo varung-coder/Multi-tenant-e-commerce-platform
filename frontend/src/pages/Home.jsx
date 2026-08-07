@@ -97,10 +97,11 @@ function Home() {
 
    {products.map((product) => (
     <ProductCard
-     key={product._id}
-     image={hero}
-     title={product.name}
-     price={`₹${product.price}`}
+      key={product._id}
+      id={product._id}
+      image={product.image}
+      title={product.name}
+      price={`₹${product.price}`}
     />
   ))}
 

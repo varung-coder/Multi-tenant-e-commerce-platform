@@ -1,7 +1,30 @@
 import Navbar from "../components/Navbar";
 import headphones from "../assets/headphones.jpg";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import API from "../api/api";
 
 function ProductDetails() {
+  const { id } = useParams();
+
+  const [product, setProduct] = useState(null);
+  useEffect(() => {
+       fetchProduct();
+  }, []);
+
+  const fetchProduct = async () => {
+  try {
+    const res = await API.get(`/products/${id}`);
+    console.log("Product Response:", res.data);
+    setProduct(res.data.product);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+if (!product) {
+  return <h2>Loading...</h2>;
+}
   return (
     <>
       <Navbar />
@@ -9,21 +32,19 @@ function ProductDetails() {
       <section className="product-details">
 
         <div className="product-image">
-          <img src={headphones} alt="Wireless Headphones" />
+          <img src={product.image} alt={product.name} />
         </div>
 
         <div className="product-info">
 
-          <h1>Wireless Headphones</h1>
+          <h1>{product.name}</h1>
 
-          <p className="price">₹2,499</p>
+          <p className="price">₹{product.price}</p>
 
           <p className="rating">⭐⭐⭐⭐⭐ (4.8)</p>
 
           <p className="description">
-            Enjoy crystal-clear sound quality with our premium wireless
-            headphones. Long battery life, comfortable design, and deep bass
-            make them perfect for music, gaming, and daily use.
+             {product.description}
           </p>
 
           <div className="product-specs">
@@ -42,7 +63,10 @@ function ProductDetails() {
 
          <div className="product-extra">
 
-          <p><strong>Stock:</strong> <span className="in-stock">In Stock</span></p>
+          <p><strong>Stock:</strong>
+           <span className="in-stock">
+           {product.stock > 0 ? "In Stock" : "Out of Stock"}
+          </span></p>
 
           <p><strong>Delivery:</strong> Free Delivery in 2–3 Days</p>
 
