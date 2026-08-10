@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import API from "../api/api";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
+import "./Products.css";
+import { Link } from "react-router-dom";
 
 import headphones from "../assets/headphones.jpg";
 import smartwatch from "../assets/smartwatch.jpg";

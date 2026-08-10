@@ -1,12 +1,154 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import headphones from "../assets/headphones.jpg";
+import API from "../api/api";
 
 function Cart() {
   const navigate = useNavigate();
-  const [quantity, setQuantity] = useState(1);
-  const price = 2499;
+
+  const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    if (user) {
+      fetchCart();
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  const fetchCart = async () => {
+    try {
+      const res = await API.get(`/cart/${user.id}`);
+
+      setCart(res.data.cart);
+
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removeItem = async (cartId) => {
+    try {
+      const res = await API.delete(`/cart/remove/${cartId}`);
+
+      alert(res.data.message);
+
+      fetchCart();
+
+    } catch (error) {
+      alert(
+        error.response?.data?.message ||
+        "Failed to remove product"
+      );
+    }
+  };
+
+  const updateQuantity = async (cartId, newQuantity) => {
+  if (newQuantity < 1) {
+    return;
+  }
+
+  try {
+    await API.put(`/cart/update/${cartId}`, {
+      quantity: newQuantity,
+    });
+
+    fetchCart();
+
+  } catch (error) {
+    alert(
+      error.response?.data?.message ||
+      "Failed to update quantity"
+    );
+  }
+};
+
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+
+        <section className="cart-page">
+          <h1>My Shopping Cart</h1>
+          <p>Loading cart...</p>
+        </section>
+      </>
+    );
+  }
+
+  if (!user) {
+    return (
+      <>
+        <Navbar />
+
+        <section className="cart-page">
+
+          <h1>My Shopping Cart</h1>
+
+          <div className="empty-cart">
+
+            <h2>🔐 Please Login</h2>
+
+            <p>
+              Please login to view your shopping cart.
+            </p>
+
+            <button
+              className="shop-btn"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </button>
+
+          </div>
+
+        </section>
+      </>
+    );
+  }
+
+  if (cart.length === 0) {
+    return (
+      <>
+        <Navbar />
+
+        <section className="cart-page">
+
+          <h1>My Shopping Cart</h1>
+
+          <div className="empty-cart">
+
+            <h2>🛒 Your Cart is Empty</h2>
+
+            <p>
+              Looks like you haven't added anything to your cart yet.
+            </p>
+
+            <button
+              className="shop-btn"
+              onClick={() => navigate("/products")}
+            >
+              Continue Shopping
+            </button>
+
+          </div>
+
+        </section>
+      </>
+    );
+  }
+
+  const subtotal = cart.reduce(
+    (total, item) =>
+      total + item.product.price * item.quantity,
+    0
+  );
+
   return (
     <>
       <Navbar />
@@ -15,81 +157,77 @@ function Cart() {
 
         <h1>My Shopping Cart</h1>
 
-        <div 
-          className="empty-cart"
-          style={{ display: "none" }}
-        >
+        <section className="cart-items">
 
-        <h2>🛒 Your Cart is Empty</h2>
+          {cart.map((item) => (
 
-        <p>
-         Looks like you haven't added anything to your cart yet.
-        </p>
+            <div className="cart-card" key={item._id}>
 
-      <button
-         className="shop-btn"
-         onClick={() => navigate("/products")}
-      >
-         Continue Shopping
-      </button>
+              <img
+                src={item.product.image}
+                alt={item.product.name}
+              />
 
-       </div>
-       <section className="cart-items">
+              <div className="cart-details">
 
-        <div className="cart-card">
+                <h3>{item.product.name}</h3>
 
-       <img src={headphones} alt="Headphones" />
+                <p>
+                  ₹{item.product.price * item.quantity}
+                </p>
 
-       <div className="cart-details">
-        <h3>Wireless Headphones</h3>
-        <p>₹{price * quantity}</p>
+               <div className="quantity">
 
-       <div className="quantity">
-        <button
-         onClick={() => quantity > 1 && setQuantity(quantity - 1)}
-        >
-         -
-       </button>
+               <button onClick={() => updateQuantity(item._id, item.quantity - 1)}> - </button>
 
-       <span>{quantity}</span>
+               <span>{item.quantity}</span>
 
-       <button
-        onClick={() => setQuantity(quantity + 1)}
-       >
-        +
-       </button>
-       </div>
+                <button onClick={() => updateQuantity(item._id, item.quantity + 1)}> + </button>
+             </div>
 
-       </div>
+                <button
+                  className="delete-btn"
+                  onClick={() => removeItem(item._id)}
+                >
+                  Remove
+                </button>
 
-      </div>
+              </div>
 
-     </section>
-      
-      <section className="cart-summary">
+            </div>
 
-      <h2>Order Summary</h2>
+          ))}
 
-      <div className="summary-row">
-       <span>Subtotal</span>
-       <span>₹{price * quantity}</span>
-      </div>
+        </section>
 
-      <div className="summary-row">
-       <span>Delivery</span>
-       <span>Free</span>
-      </div>
+        <section className="cart-summary">
 
-      <div className="summary-row total">
-       <span>Total</span>
-       <span>₹{price * quantity}</span>
-      </div>
+          <h2>Order Summary</h2>
 
-     <button className="checkout-btn">
-       Proceed to Checkout
-     </button>
+          <div className="summary-row">
+            <span>Subtotal</span>
+            <span>₹{subtotal}</span>
+          </div>
 
-</section>
+          <div className="summary-row">
+            <span>Delivery</span>
+            <span>Free</span>
+          </div>
+
+          <div className="summary-row total">
+            <span>Total</span>
+            <span>₹{subtotal}</span>
+          </div>
+
+          <button
+            className="checkout-btn"
+            onClick={() => navigate("/checkout")}
+          >
+            Proceed to Checkout
+          </button>
+
+        </section>
+
       </section>
     </>
   );
