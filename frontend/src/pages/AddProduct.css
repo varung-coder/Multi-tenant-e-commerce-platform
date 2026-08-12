@@ -1,0 +1,78 @@
+.add-product-page {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+  background: #f5f7fb;
+}
+
+.add-product-box {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.add-product-box h1 {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.add-product-box > p {
+  text-align: center;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.add-product-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.add-product-box input,
+.add-product-box textarea,
+.add-product-box select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.add-product-box textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.add-product-box input:focus,
+.add-product-box textarea:focus,
+.add-product-box select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.add-product-box button {
+  padding: 13px;
+  border: none;
+  border-radius: 7px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-product-box button:hover {
+  background: #1d4ed8;
+}
+
+.add-product-box .error-message {
+  color: #dc2626;
+  text-align: center;
+  margin-bottom: 15px;
+}
