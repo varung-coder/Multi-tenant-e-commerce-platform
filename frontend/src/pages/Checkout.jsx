@@ -37,35 +37,41 @@ function Checkout() {
     0
   );
 
-  const placeOrder = async () => {
-    if (cart.length === 0) {
-      alert("Your cart is empty");
-      return;
-    }
+const placeOrder = async () => {
+  if (cart.length === 0) {
+    alert("Your cart is empty");
+    return;
+  }
 
-    try {
-      const products = cart.map((item) => ({
-        product: item.product._id,
-        quantity: item.quantity,
-      }));
+  try {
+    const products = cart.map((item) => ({
+      product: item.product._id,
+      quantity: item.quantity,
+    }));
 
-      const res = await API.post("/orders/create", {
-        user: user.id,
-        products,
-        totalPrice,
-      });
+    // Create order
+    const res = await API.post("/orders/create", {
+      user: user.id,
+      products,
+      totalPrice,
+    });
 
-      alert(res.data.message);
+    // Clear cart after successful order
+    await API.delete(`/cart/clear/${user.id}`);
 
-      navigate("/");
+    alert("Order placed successfully!");
 
-    } catch (error) {
-      alert(
-        error.response?.data?.message ||
-        "Failed to place order"
-      );
-    }
-  };
+    navigate("/");
+
+  } catch (error) {
+    console.log(error);
+
+    alert(
+      error.response?.data?.message ||
+      "Failed to place order"
+    );
+  }
+};
 
   if (loading) {
     return (

@@ -100,6 +100,25 @@ const removeFromCart = async (req, res) => {
   }
 };
 
+const clearCart = async (req, res) => {
+  try {
+    const { user } = req.params;
+
+    await Cart.deleteMany({ user });
+
+    res.status(200).json({
+      success: true,
+      message: "Cart Cleared Successfully",
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const updateCartQuantity = async (req, res) => {
   try {
     const { quantity } = req.body;
@@ -136,4 +155,5 @@ module.exports = {
   getCart,
   removeFromCart,
   updateCartQuantity,
+  clearCart,
 };

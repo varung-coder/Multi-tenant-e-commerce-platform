@@ -9,6 +9,9 @@ import headphones from "../assets/headphones.jpg";
 import smartwatch from "../assets/smartwatch.jpg";
 import shoes from "../assets/shoes.jpg";
 import chair from "../assets/chair.jpg";
+import samsungS24 from "../assets/samsung-s24.jpg";
+import speaker from "../assets/speaker.jpg";
+import hoodie from "../assets/hoodie.jpg";
 
 
 function Products() {
@@ -74,7 +77,21 @@ const fetchProducts = async () => {
        <ProductCard
          key={product._id}
          id={product._id}
-         image={product.image}
+         image={
+           product.name === "Samsung Galaxy S24"
+           ? samsungS24
+           : product.name === "Wireless Headphones"
+           ? headphones
+           : product.name === "Smart Watch"
+           ? smartwatch
+           : product.name === "Bluetooth Speaker"
+           ? speaker
+           : product.name === "Running Shoes"
+           ? shoes
+           : product.name === "Premium Hoodie"
+           ? hoodie
+           : product.image
+           }
          title={product.name}
          price={`₹${product.price}`}
        />

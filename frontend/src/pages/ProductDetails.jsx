@@ -1,8 +1,14 @@
 import Navbar from "../components/Navbar";
 import headphones from "../assets/headphones.jpg";
+import samsungS24 from "../assets/samsung-s24.jpg";
+import smartwatch from "../assets/smartwatch.jpg";
+import speaker from "../assets/speaker.jpg";
+import shoes from "../assets/shoes.jpg";
+import hoodie from "../assets/hoodie.jpg";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import API from "../api/api";
+import "./ProductDetails.css";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -32,7 +38,24 @@ if (!product) {
       <section className="product-details">
 
         <div className="product-image">
-          <img src={product.image} alt={product.name} />
+          <img
+             src={
+               product.name === "Samsung Galaxy S24"
+               ? samsungS24
+               : product.name === "Wireless Headphones"
+               ? headphones
+               : product.name === "Smart Watch"
+               ? smartwatch
+               : product.name === "Bluetooth Speaker"
+               ? speaker
+               : product.name === "Running Shoes"
+               ? shoes
+               : product.name === "Premium Hoodie"
+               ? hoodie
+               : product.image
+            }
+            alt={product.name}
+         />
         </div>
 
         <div className="product-info">
@@ -74,9 +97,35 @@ if (!product) {
 
         </div>
 
-          <button className="add-cart-btn">
-            Add to Cart
-          </button>
+         <button
+  className="add-cart-btn"
+  onClick={async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) {
+      alert("Please login to add products to cart");
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const res = await API.post("/cart/add", {
+        user: user.id,
+        product: product._id,
+        quantity: 1,
+      });
+
+      alert(res.data.message);
+    } catch (error) {
+      alert(
+        error.response?.data?.message ||
+        "Failed to add product to cart"
+      );
+    }
+  }}
+>
+  Add to Cart
+</button>
 
           <button className="buy-now-btn">
             Buy Now
