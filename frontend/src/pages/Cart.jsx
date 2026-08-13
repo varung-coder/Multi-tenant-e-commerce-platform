@@ -2,6 +2,21 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import API from "../api/api";
+import "./Cart.css";
+
+import headphones from "../assets/headphones.jpg";
+import smartwatch from "../assets/smartwatch.jpg";
+import speaker from "../assets/speaker.jpg";
+import shoes from "../assets/shoes.jpg";
+import samsungS24 from "../assets/samsung-s24.jpg";
+import hoodie from "../assets/hoodie.jpg";
+
+import gamingMouse from "../assets/gaming-mouse.jpg";
+import mechanicalKeyboard from "../assets/mechanical-keyboard.jpg";
+import laptopBackpack from "../assets/laptop-backpack.jpg";
+import sunglasses from "../assets/sunglasses.jpg";
+import mensCasualShirt from "../assets/mens-casual-shirt.jpg";
+import coffeeMaker from "../assets/coffee-maker.jpg";
 
 function Cart() {
   const navigate = useNavigate();
@@ -22,9 +37,7 @@ function Cart() {
   const fetchCart = async () => {
     try {
       const res = await API.get(`/cart/${user.id}`);
-
       setCart(res.data.cart);
-
     } catch (error) {
       console.log(error);
     } finally {
@@ -39,7 +52,6 @@ function Cart() {
       alert(res.data.message);
 
       fetchCart();
-
     } catch (error) {
       alert(
         error.response?.data?.message ||
@@ -49,24 +61,23 @@ function Cart() {
   };
 
   const updateQuantity = async (cartId, newQuantity) => {
-  if (newQuantity < 1) {
-    return;
-  }
+    if (newQuantity < 1) {
+      return;
+    }
 
-  try {
-    await API.put(`/cart/update/${cartId}`, {
-      quantity: newQuantity,
-    });
+    try {
+      await API.put(`/cart/update/${cartId}`, {
+        quantity: newQuantity,
+      });
 
-    fetchCart();
-
-  } catch (error) {
-    alert(
-      error.response?.data?.message ||
-      "Failed to update quantity"
-    );
-  }
-};
+      fetchCart();
+    } catch (error) {
+      alert(
+        error.response?.data?.message ||
+        "Failed to update quantity"
+      );
+    }
+  };
 
   if (loading) {
     return (
@@ -164,7 +175,33 @@ function Cart() {
             <div className="cart-card" key={item._id}>
 
               <img
-                src={item.product.image}
+                src={
+                  item.product.name === "Samsung Galaxy S24"
+                    ? samsungS24
+                    : item.product.name === "Wireless Headphones"
+                    ? headphones
+                    : item.product.name === "Smart Watch"
+                    ? smartwatch
+                    : item.product.name === "Bluetooth Speaker"
+                    ? speaker
+                    : item.product.name === "Running Shoes"
+                    ? shoes
+                    : item.product.name === "Premium Hoodie"
+                    ? hoodie
+                    : item.product.name === "Gaming Mouse"
+                    ? gamingMouse
+                    : item.product.name === "Mechanical Keyboard"
+                    ? mechanicalKeyboard
+                    : item.product.name === "Laptop Backpack"
+                    ? laptopBackpack
+                    : item.product.name === "Sunglasses"
+                    ? sunglasses
+                    : item.product.name === "Men's Casual Shirt"
+                    ? mensCasualShirt
+                    : item.product.name === "Coffee Maker"
+                    ? coffeeMaker
+                    : item.product.image
+                }
                 alt={item.product.name}
               />
 
@@ -176,14 +213,33 @@ function Cart() {
                   ₹{item.product.price * item.quantity}
                 </p>
 
-               <div className="quantity">
+                <div className="quantity">
 
-               <button onClick={() => updateQuantity(item._id, item.quantity - 1)}> - </button>
+                  <button
+                    onClick={() =>
+                      updateQuantity(
+                        item._id,
+                        item.quantity - 1
+                      )
+                    }
+                  >
+                    -
+                  </button>
 
-               <span>{item.quantity}</span>
+                  <span>{item.quantity}</span>
 
-                <button onClick={() => updateQuantity(item._id, item.quantity + 1)}> + </button>
-             </div>
+                  <button
+                    onClick={() =>
+                      updateQuantity(
+                        item._id,
+                        item.quantity + 1
+                      )
+                    }
+                  >
+                    +
+                  </button>
+
+                </div>
 
                 <button
                   className="delete-btn"

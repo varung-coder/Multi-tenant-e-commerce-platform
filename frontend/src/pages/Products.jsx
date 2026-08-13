@@ -12,6 +12,12 @@ import chair from "../assets/chair.jpg";
 import samsungS24 from "../assets/samsung-s24.jpg";
 import speaker from "../assets/speaker.jpg";
 import hoodie from "../assets/hoodie.jpg";
+import gamingMouse from "../assets/gaming-mouse.jpg";
+import mechanicalKeyboard from "../assets/mechanical-keyboard.jpg";
+import laptopBackpack from "../assets/laptop-backpack.jpg";
+import sunglasses from "../assets/sunglasses.jpg";
+import mensCasualShirt from "../assets/mens-casual-shirt.jpg";
+import coffeeMaker from "../assets/coffee-maker.jpg";
 
 
 function Products() {
@@ -90,6 +96,18 @@ const fetchProducts = async () => {
            ? shoes
            : product.name === "Premium Hoodie"
            ? hoodie
+           : product.name === "Gaming Mouse"
+           ? gamingMouse
+           : product.name === "Mechanical Keyboard"
+           ? mechanicalKeyboard
+           : product.name === "Laptop Backpack"
+           ? laptopBackpack
+           : product.name === "Sunglasses"
+           ? sunglasses
+           : product.name === "Men's Casual Shirt"
+           ? mensCasualShirt
+           : product.name === "Coffee Maker"
+           ? coffeeMaker
            : product.image
            }
          title={product.name}
