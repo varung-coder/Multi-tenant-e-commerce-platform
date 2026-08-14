@@ -7,57 +7,69 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
- const handleRegister = async () => {
+  const handleRegister = async () => {
 
-  if (name.trim() === "") {
-    setError("Please enter your name.");
-    return;
-  }
+    if (name.trim() === "") {
+      setError("Please enter your name.");
+      return;
+    }
 
-  if (email.trim() === "") {
-    setError("Please enter your email.");
-    return;
-  }
+    if (email.trim() === "") {
+      setError("Please enter your email.");
+      return;
+    }
 
-  if (!email.includes("@") || !email.includes(".")) {
-    setError("Please enter a valid email.");
-    return;
-  }
+    if (!email.includes("@") || !email.includes(".")) {
+      setError("Please enter a valid email.");
+      return;
+    }
 
-  if (password.trim() === "") {
-    setError("Please enter your password.");
-    return;
-  }
+    if (password.trim() === "") {
+      setError("Please enter your password.");
+      return;
+    }
 
-  if (password.length < 6) {
-    setError("Password must be at least 6 characters.");
-    return;
-  }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
 
-  try {
+    if (confirmPassword.trim() === "") {
+      setError("Please confirm your password.");
+      return;
+    }
 
-  const res = await API.post("/users/register", {
-    name,
-    email,
-    password,
-  });
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
 
-  alert(res.data.message);
+    try {
 
-  navigate("/login");
+      const res = await API.post("/users/register", {
+        name,
+        email,
+        password,
+      });
 
-} catch (error) {
+      alert(res.data.message);
 
-  setError(
-    error.response?.data?.message || "Registration Failed"
-  );
+      navigate("/login");
 
-}
+    } catch (error) {
 
- };
+      setError(
+        error.response?.data?.message || "Registration Failed"
+      );
+
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -71,10 +83,10 @@ function Register() {
           <p>Register to start shopping.</p>
 
           <input
-             type="text"
-             placeholder="Enter your name"
-             value={name}
-             onChange={(e) => setName(e.target.value)}
+            type="text"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
 
           <input
@@ -94,20 +106,26 @@ function Register() {
           <input
             type="password"
             placeholder="Confirm password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
-          {error && <p className="error-message">{error}</p>}
+          {error && (
+            <p className="error-message">
+              {error}
+            </p>
+          )}
 
           <button
             className="register-btn"
             onClick={handleRegister}
           >
-             Register
+            Register
           </button>
 
           <p className="register-text">
             Already have an account?{" "}
-           <Link to="/login">Login</Link>
+            <Link to="/login">Login</Link>
           </p>
 
         </div>

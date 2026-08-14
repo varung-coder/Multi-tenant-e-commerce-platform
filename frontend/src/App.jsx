@@ -10,6 +10,7 @@ import Checkout from "./pages/Checkout";
 import ProductDetails from "./pages/ProductDetails";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
+import Orders from "./pages/Orders";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/edit-product/:id" element={<EditProduct />} />
+        <Route path="/orders" element={<Orders />} />
       </Routes>
     </BrowserRouter>
   );

@@ -5,17 +5,16 @@ function Navbar() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
-  console.log("Navbar Token:", token);
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
 
-  localStorage.removeItem("token");
+    alert("Logout Successful");
 
-  alert("Logout Successful");
+    navigate("/login");
+  };
 
-  navigate("/login");
-
-};
   return (
     <nav className="navbar">
 
@@ -25,20 +24,36 @@ function Navbar() {
 
       <div className="search-box">
         <input
-           type="text"
-           placeholder="🔍 Search products..."
+          type="text"
+          placeholder="🔍 Search products..."
         />
       </div>
 
       <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/products">Products</Link></li>
-        <li><Link to="/cart">Cart</Link></li>
+
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+
+        <li>
+          <Link to="/products">Products</Link>
+        </li>
+
+        <li>
+          <Link to="/cart">Cart</Link>
+        </li>
+
+        {token && (
+          <li>
+            <Link to="/orders">My Orders</Link>
+          </li>
+        )}
+
         {token ? (
-           <li>
-             <button
-               onClick={handleLogout}
-               style={{
+          <li>
+            <button
+              onClick={handleLogout}
+              style={{
                 background: "transparent",
                 border: "none",
                 cursor: "pointer",
@@ -46,17 +61,23 @@ function Navbar() {
                 fontSize: "16px",
                 fontWeight: "500",
               }}
-           >
+            >
               Logout
-           </button>
+            </button>
           </li>
-       ) : (
-         <>
-           <li><Link to="/login">Login</Link></li>
-           <li><Link to="/register">Register</Link></li>
-         </>
-     )}
-     </ul>
+        ) : (
+          <>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+          </>
+        )}
+
+      </ul>
 
       <div className="nav-icons">
         <span>🛒</span>

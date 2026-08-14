@@ -57,7 +57,7 @@ function Home() {
             with fast delivery and secure payments.
           </p>
 
-          <button className="hero-btn">
+          <button className="hero-btn" onClick={() => window.location.href = "/products"}>
             Shop Now
           </button>
         </div>
