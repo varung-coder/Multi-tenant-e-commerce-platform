@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   addProduct,
   getProducts,
+  getCategories,
   getProductById,
   updateProduct,
   deleteProduct,
@@ -11,6 +12,7 @@ const {
 
 router.post("/add", addProduct);
 router.get("/", getProducts);
+router.get("/categories", getCategories);
 router.get("/:id", getProductById);
 router.put("/update/:id", updateProduct);
 router.delete("/delete/:id", deleteProduct);
