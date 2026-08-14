@@ -31,13 +31,34 @@ const addProduct = async (req, res) => {
 // Get All Products
 const getProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const { category } = req.query;
+    const filter = {};
+    if (category && category !== "All Categories" && category !== "All") {
+      filter.category = category;
+    }
+    const products = await Product.find(filter);
 
     res.status(200).json({
       success: true,
       products,
     });
 
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// Get Unique Categories
+const getCategories = async (req, res) => {
+  try {
+    const categories = await Product.distinct("category");
+    res.status(200).json({
+      success: true,
+      categories,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -129,6 +150,7 @@ const deleteProduct = async (req, res) => {
 module.exports = {
   addProduct,
   getProducts,
+  getCategories,
   getProductById,
   updateProduct,
   deleteProduct,
