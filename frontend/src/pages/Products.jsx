@@ -22,6 +22,7 @@ import coffeeMaker from "../assets/coffee-maker.jpg";
 
 function Products() {
   const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("All");
 
   const [searchParams] = useSearchParams();
 
@@ -37,11 +38,15 @@ function Products() {
 
   useEffect(() => {
   fetchProducts();
-}, []);
+}, [category]);
 
 const fetchProducts = async () => {
   try {
-    const res = await API.get("/products");
+    const res = await API.get(
+    category === "All"
+    ? "/products"
+    : `/products?category=${encodeURIComponent(category)}`
+  );
     console.log(res.data);
     console.log("First Product:", res.data.products[0]);
     setProducts(res.data.products);
@@ -72,11 +77,14 @@ const fetchProducts = async () => {
        </div>
 
        <div className="filter-container">
-        <select>
-          <option>All Categories</option>
-          <option>Electronics</option>
-          <option>Fashion</option>
-          <option>Home</option>
+        <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+        >
+           <option value="All">All Categories</option>
+           <option value="Electronics">Electronics</option>
+           <option value="Fashion">Fashion</option>
+           <option value="Home">Home</option>
         </select>
        </div>
 
