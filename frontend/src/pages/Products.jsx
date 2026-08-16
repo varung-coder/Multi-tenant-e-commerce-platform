@@ -3,7 +3,7 @@ import API from "../api/api";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 import "./Products.css";
-import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 import headphones from "../assets/headphones.jpg";
 import smartwatch from "../assets/smartwatch.jpg";
@@ -22,6 +22,17 @@ import coffeeMaker from "../assets/coffee-maker.jpg";
 
 function Products() {
   const [search, setSearch] = useState("");
+
+  const [searchParams] = useSearchParams();
+
+ useEffect(() => {
+  const searchQuery = searchParams.get("search");
+
+  if (searchQuery) {
+    setSearch(searchQuery);
+  }
+}, [searchParams]);
+
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
